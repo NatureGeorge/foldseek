@@ -376,24 +376,9 @@ void GemmiWrapper::updateStructure(void * void_st, const std::string& filename, 
                         taxId = it->second;
                     }
                 }
-                bool isHetAtomInList = res.het_flag == 'H' && threeAA2oneAA.find(res.name) != threeAA2oneAA.end();
-                if (isHetAtomInList == false && res.het_flag != 'A')
-                    continue;
-                if (isHetAtomInList) {
-                    bool notPolymer = res.entity_type != gemmi::EntityType::Polymer;
-                    if (notPolymer == true) {
+                bool notPolymer = res.entity_type != gemmi::EntityType::Polymer;
+                if (notPolymer == true) {
                         continue;
-                    }
-                    bool hasCA = false;
-                    for (gemmi::Atom &atom : res.atoms) {
-                        if (atom.name == "CA") {
-                            hasCA = true;
-                            break;
-                        }
-                    }
-                    if (hasCA == false) {
-                        continue;
-                    }
                 }
                 Vec3 ca_atom = {NAN, NAN, NAN};
                 Vec3 cb_atom = {NAN, NAN, NAN};
